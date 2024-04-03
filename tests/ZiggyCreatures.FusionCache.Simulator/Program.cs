@@ -38,27 +38,27 @@ namespace ZiggyCreatures.Caching.Fusion.Playground.Simulator
 		public static readonly TimeSpan CacheDuration = TimeSpan.FromSeconds(30);
 
 		// LOGGING
-		public static readonly bool EnableFusionCacheLogging = false;
-		public static readonly bool EnableSimulatorLogging = false;
-		public static readonly bool EnableLoggingExceptions = false;
+		public static readonly bool EnableFusionCacheLogging = true;
+		public static readonly bool EnableSimulatorLogging = true;
+		public static readonly bool EnableLoggingExceptions = true;
 
 		internal static string RedisConnection { get; set; } = "127.0.0.1:6379,ssl=False,abortConnect=false,defaultDatabase={0},connectTimeout=1000,syncTimeout=1000";
 
 		// DISTRIBUTED CACHE
-		public static readonly DistributedCacheType DistributedCacheType = DistributedCacheType.Memory;
+		public static readonly DistributedCacheType DistributedCacheType = DistributedCacheType.Redis;
 		public static readonly bool AllowBackgroundDistributedCacheOperations = true;
 		public static readonly TimeSpan? DistributedCacheSoftTimeout = null; //TimeSpan.FromMilliseconds(100);
 		public static readonly TimeSpan? DistributedCacheHardTimeout = null; //TimeSpan.FromMilliseconds(500);
 		public static readonly TimeSpan DistributedCacheCircuitBreakerDuration = TimeSpan.Zero;
-		public static string DistributedCacheRedisConnection = RedisConnection;
+		public static string DistributedCacheRedisConnection { get { return RedisConnection; } }
 		public static readonly TimeSpan? ChaosDistributedCacheSyntheticMinDelay = null; //TimeSpan.FromMilliseconds(500);
 		public static readonly TimeSpan? ChaosDistributedCacheSyntheticMaxDelay = null; //TimeSpan.FromMilliseconds(500);
 
 		// BACKPLANE
-		public static readonly BackplaneType BackplaneType = BackplaneType.Memory;
+		public static readonly BackplaneType BackplaneType = BackplaneType.Redis;
 		public static readonly bool AllowBackgroundBackplaneOperations = true;
 		public static readonly TimeSpan BackplaneCircuitBreakerDuration = TimeSpan.Zero;
-		public static string BackplaneRedisConnection = RedisConnection;
+		public static string BackplaneRedisConnection { get { return RedisConnection; } }
 		public static readonly TimeSpan? ChaosBackplaneSyntheticDelay = null; //TimeSpan.FromMilliseconds(500);
 
 		// AUTO-RECOVERY
