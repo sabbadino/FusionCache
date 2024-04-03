@@ -42,7 +42,7 @@ namespace ZiggyCreatures.Caching.Fusion.Playground.Simulator
 		public static readonly bool EnableSimulatorLogging = false;
 		public static readonly bool EnableLoggingExceptions = false;
 
-		private static readonly string RedisConnection = "127.0.0.1:6379,ssl=False,abortConnect=false,defaultDatabase={0},connectTimeout=1000,syncTimeout=1000";
+		internal static string RedisConnection { get; set; } = "127.0.0.1:6379,ssl=False,abortConnect=false,defaultDatabase={0},connectTimeout=1000,syncTimeout=1000";
 
 		// DISTRIBUTED CACHE
 		public static readonly DistributedCacheType DistributedCacheType = DistributedCacheType.Memory;
@@ -50,7 +50,7 @@ namespace ZiggyCreatures.Caching.Fusion.Playground.Simulator
 		public static readonly TimeSpan? DistributedCacheSoftTimeout = null; //TimeSpan.FromMilliseconds(100);
 		public static readonly TimeSpan? DistributedCacheHardTimeout = null; //TimeSpan.FromMilliseconds(500);
 		public static readonly TimeSpan DistributedCacheCircuitBreakerDuration = TimeSpan.Zero;
-		public static readonly string DistributedCacheRedisConnection = RedisConnection;
+		public static string DistributedCacheRedisConnection = RedisConnection;
 		public static readonly TimeSpan? ChaosDistributedCacheSyntheticMinDelay = null; //TimeSpan.FromMilliseconds(500);
 		public static readonly TimeSpan? ChaosDistributedCacheSyntheticMaxDelay = null; //TimeSpan.FromMilliseconds(500);
 
@@ -58,7 +58,7 @@ namespace ZiggyCreatures.Caching.Fusion.Playground.Simulator
 		public static readonly BackplaneType BackplaneType = BackplaneType.Memory;
 		public static readonly bool AllowBackgroundBackplaneOperations = true;
 		public static readonly TimeSpan BackplaneCircuitBreakerDuration = TimeSpan.Zero;
-		public static readonly string BackplaneRedisConnection = RedisConnection;
+		public static string BackplaneRedisConnection = RedisConnection;
 		public static readonly TimeSpan? ChaosBackplaneSyntheticDelay = null; //TimeSpan.FromMilliseconds(500);
 
 		// AUTO-RECOVERY
@@ -848,6 +848,13 @@ namespace ZiggyCreatures.Caching.Fusion.Playground.Simulator
 		{
 			Console.Title = "FusionCache - Simulator";
 
+			var configurationBuilder = new ConfigurationBuilder();
+			configurationBuilder.AddUserSecrets(typeof(Program).Assembly);
+			var conf = configurationBuilder.Build();
+			var redisCnString = conf["RedisConfiguration:Configuration"];
+			if (!string.IsNullOrEmpty(redisCnString)) { 
+				SimulatorOptions.RedisConnection = redisCnString;
+			}
 			CacheKey = $"foo-{DateTime.UtcNow.Ticks}";
 
 			AnsiConsole.Clear();

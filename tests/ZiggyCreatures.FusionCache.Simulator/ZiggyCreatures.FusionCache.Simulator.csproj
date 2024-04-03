@@ -8,11 +8,13 @@
 		<Nullable>enable</Nullable>
 		<IsPackable>false</IsPackable>
 		<RootNamespace>ZiggyCreatures.Caching.Fusion.Simulator</RootNamespace>
+		<UserSecretsId>8100b1ec-8c4f-47c8-b0f6-ab7b4df7e698</UserSecretsId>
 	</PropertyGroup>
 			
 	<ItemGroup>
 		<PackageReference Include="FASTERCache" Version="0.1.21" />
 		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.3" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
 		<PackageReference Include="Serilog" Version="3.1.1" />
 		<PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
 		<PackageReference Include="Spectre.Console" Version="0.48.0" />
